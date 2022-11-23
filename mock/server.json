@@ -1,0 +1,7 @@
+{
+  "token": {
+    "idToken" : "ID_TOKEN",
+    "accessToken": "ACCESS_TOKEN",
+    "authType" : "JWT"
+  }
+}
