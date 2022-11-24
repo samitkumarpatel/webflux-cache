@@ -85,9 +85,12 @@ class TokenService {
 	public Mono<Token> fetchToken() {
 		log.info("fetchToken flow");
 		return getToken()
-				.cache(Duration.ofMinutes(1l))
-				/*.cacheInvalidateIf(e -> Objects.isNull(e))
-				.cacheInvalidateWhen(e -> )*/;
+				/*.cache(Duration.ofMinutes(1l))*/
+				.cache(
+						token -> Duration.ofMinutes(1l),
+						(Throwable t) -> Duration.ZERO,
+						() -> Duration.ZERO)
+				;
 	}
 
 
@@ -99,6 +102,6 @@ class TokenService {
 				.retrieve()
 				.bodyToMono(Token.class)
 				.doOnSuccess(r -> log.info("WebClient Response: SUCCESS"))
-				.doOnError(e -> log.error("WebClient Response: ERROR {} ", e.getMessage()));
+				.doOnError(e -> log.error("WebClient Response: ERROR "));
 	}
 }
